@@ -14,7 +14,7 @@ class RoleController extends Controller
     public function __construct(){
         $this->middleware('permission:role-list|role-create|role-edit|role-delete',
                           ['only' => ['index', 'store']]);
-        
+
         $this->middleware('permission:role-create', ['only' =>['create', 'store']]);
 
         $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
@@ -57,7 +57,7 @@ class RoleController extends Controller
     {
         $this->validate($request, ['name' => 'required|unique:roles,name',
                                    'permission' => 'required']);
-                           
+
         $role = Role::create(['name' => $request->input('name')]);
 
         $role->syncPermissions($request->input('permission'));
@@ -91,9 +91,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //
     {
-        //
+        $role = Role::find($id); //findOrFail($id); //get the role with the given id or fail if not found
+        $permission = Permission::get(); //get all permissions
+        $rolePermission = DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id) //permissões do perfil
+                                                           ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id') //returns an array of permission ids
+                                                           ->all(); //returns an array of permission ids
+
+        return view('roles.edit', compact('role', 'permission', 'rolePermission'));
     }
 
     /**
@@ -105,7 +111,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, ['name' => 'required',
+                                   'permission' => 'required']);
+
+        $role = Role::find($id); //findOrFail($id); //get role with the given id or fail if not found
+        $role->name = $request->input('name');
+        $role->save();
+        $role->syncPermissions($request->input('permission'));
+        return redirect()->route('roles.index')->with('success', 'Perfil atualizado com sucesso');
     }
 
     /**
@@ -116,6 +129,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::find($id);  //get role with the given id or fail if not found
+        $role->delete(); //delete the role
+        return redirect()->route('roles.index')->with('success', 'Role deletado com sucesso'); //redirect to index
     }
 }
