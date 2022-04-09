@@ -114,11 +114,11 @@ class RoleController extends Controller
         $this->validate($request, ['name' => 'required',
                                    'permission' => 'required']);
 
-        $role = Role::find($id); //findOrFail($id); //get role with the given id or fail if not found
-        $role->name = $request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')->with('success', 'Perfil atualizado com sucesso');
+        $role = Role::find($id);  //get role with the given id or fail if not found
+        $role->name = $request->input('name'); //update role name
+        $role->save(); //save role
+        $role->syncPermissions($request->input('permission')); //sync role with the given permissions
+        return redirect()->route('roles.index')->with('success', 'Perfil atualizado com sucesso'); //redirect to the roles.index view
     }
 
     /**
@@ -129,8 +129,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);  //get role with the given id or fail if not found
-        $role->delete(); //delete the role
-        return redirect()->route('roles.index')->with('success', 'Role deletado com sucesso'); //redirect to index
+       DB::table('roles')->where('id', $id)->delete(); //delete role
+       return redirect()->route('roles.index')->with('success', 'Perfil excluído com sucesso'); //redirect to the roles.index view
     }
 }
