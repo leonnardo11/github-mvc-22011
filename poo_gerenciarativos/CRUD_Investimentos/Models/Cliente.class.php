@@ -9,7 +9,7 @@ class Cliente extends Model{
 
     }
     function inserir(array $dados):?int{
-        $stmt = $this->pdo->prepare('INSERT INTO {$this->tabela} (nome, telefone) VALUES (:nome, :telefone)');
+        $stmt = $this->prepare("INSERT INTO {$this->tabela} (nome, telefone) VALUES (:nome, :telefone)");
         $stmt->bindValue(':nome', $dados['nome']);
         $stmt->bindValue(':telefone', $dados['telefone']);
 
@@ -32,4 +32,4 @@ class Cliente extends Model{
 
 $cliente = new Cliente();
 
-$cliente->inserir(['nome' => 'João', 'telefone' => '9999-9999']);
+$cliente->inserir(['nome' => 'João', 'telefone' => '99999999']);

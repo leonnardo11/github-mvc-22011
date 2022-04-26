@@ -5,10 +5,11 @@
 abstract class Model extends PDO {
     protected string $tabela;
     public function __construct(){
-        if(!defined(DSN) || !defined(DB_USER) || !defined(DB_PASS)){
+        include_once '../Config/db.php';
+        if(!defined('DSN') || !defined('DB_USER')){
             throw new Exception('Configurações de banco de dados não encontradas');
         }
-        parent::__construct(DSN, DB_USER, DB_PASS);
+        parent::__construct(DSN, DB_USER);
     }
     abstract function inserir(array $dados):?int;
      abstract function atualizar(int $id, array $dados):bool;
