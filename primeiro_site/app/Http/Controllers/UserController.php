@@ -45,7 +45,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['name' => 'required',
-                                   'email' => 'required|email|unique.users, email',
+                                   'email' => 'required|email|',
                                    'password' => 'required|same:confirm-password',
                                    'roles' => 'required']);
 
@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $roles = Roles::pluck('name', 'name')->all();
+        $roles = Role::pluck('name', 'name')->all();
 
         $userRole = $user->roles->pluck('name', 'name')->all();
 
