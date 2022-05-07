@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Role;
 
+use Spatie\Permission\Models\Permission;
+
 use DB;
 use Hash;
 use App\Models\User;
@@ -20,6 +22,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('id', 'DESC')->paginate(5);
+
+        /*$user = User::create([ // create user admin
+            'name' => 'Leonardo',
+            'email' => 'leonardo@leonardo.com.ru',
+            'password' => bcrypt('123456')]);
+
+        $role = Role::create(['name' => 'Admin']); // create a new role called admin
+        $permissions = Permission::pluck('id','id')->all(); // get all permissions id
+        $role->syncPermissions($permissions); // assign all permissions to admin role
+        $user->assignRole([$role->id]); // assign role to user
+        */
 
         return view('users.index', compact('data'))->with('i', ($request->input('page', 1) -1 ) * 5);
     }
