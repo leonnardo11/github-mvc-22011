@@ -21,4 +21,7 @@ class VendedoresControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+    public function checkVendedor(int $id):bool{
+        return false;
+    }
 }
