@@ -33,13 +33,13 @@ class VendedoresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
- 
+
      public function store(Request $request)
     {
         $json = $request->getContent();
         return Vendedores::create(json_decode($json, JSON_OBJECT_AS_ARRAY));
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -66,7 +66,7 @@ class VendedoresController extends Controller
      */
     public function edit($id)
     {
-    
+
     }
 
     /**
@@ -110,6 +110,9 @@ class VendedoresController extends Controller
         }
 
         return json_encode($ret);
+    }
+    public function checkVendedor(int $id):bool{
+        return true;
     }
 
 }

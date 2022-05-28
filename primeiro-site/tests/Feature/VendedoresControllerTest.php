@@ -16,12 +16,9 @@ class VendedoresControllerTest extends TestCase
      */
     public function testCheckVendedor()
     {
-        $vendedores = VendedorController;
+        $vendedores = new VendedoresController;
         $this->assertTrue($vendedores->checkVendedor(1));
 
-        $response->assertStatus(200);
     }
-    public function checkVendedor(int $id):bool{
-        return false;
-    }
+    
 }
