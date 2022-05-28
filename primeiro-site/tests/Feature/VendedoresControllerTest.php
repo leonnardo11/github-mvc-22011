@@ -14,9 +14,10 @@ class VendedoresControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testCheckVendedor()
     {
-        $response = $this->get('/');
+        $vendedores = VendedorController;
+        $this->assertTrue($vendedores->checkVendedor(1));
 
         $response->assertStatus(200);
     }
