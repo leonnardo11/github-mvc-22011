@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/avisos', function (){
     return view('avisos', ['nome' => 'Clientes', 'mostrar' => true,
-                'avisos' =>[['id'=> 1, 'cliente' => 'Leticia Lima'],
+                'avisos' =>[['id'=> 1, 'cliente' => 'Leonardo'],
                             ['id'=> 2, 'aviso' => 'Intervalo'],
                             ['id'=> 3, 'aviso' => 'Final da aula']
                         ]]);
