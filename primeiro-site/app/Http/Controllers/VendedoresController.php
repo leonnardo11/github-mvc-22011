@@ -119,13 +119,13 @@ class VendedoresController extends Controller
                     ];
          return array_key_exists($id, $vendedores);
     }
-    public function getVendedor(){
+    public function getVendedor(int $id){
         $vendedores = [1=> 'Paulo',
                        2=> 'Carla',
                        3=> 'Joao',
                        4=> 'Leoardo'
                     ];
-         return $vendedores($id);
+         return $vendedores[$id];
     }
 
 }
